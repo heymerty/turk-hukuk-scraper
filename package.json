@@ -1,0 +1,16 @@
+{
+  "name": "turk-hukuk-scraper",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "node src/index.js"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.80.0",
+    "@supabase/supabase-js": "^2.99.3",
+    "cheerio": "^1.2.0",
+    "iconv-lite": "^0.7.2",
+    "node-cron": "^3.0.3"
+  }
+}
