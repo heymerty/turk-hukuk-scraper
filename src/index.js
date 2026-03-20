@@ -98,11 +98,11 @@ async function scrapeDate(dateStr) {
 }
 
 async function processUnprocessedLaws(limit = 20) {
+  // Fetch ALL unprocessed laws (including PDFs with null full_text_raw)
   const { data: laws, error } = await supabase
     .from('laws')
     .select('*')
     .eq('ai_processed', false)
-    .not('full_text_raw', 'is', null)
     .order('published_date', { ascending: false })
     .limit(limit);
 
@@ -121,11 +121,12 @@ async function processUnprocessedLaws(limit = 20) {
   let processed = 0;
   for (const law of laws) {
     try {
+      const textContent = law.full_text_raw || law.title_raw || '';
       const summary = await summarizeLaw(
         law.title_raw,
         law.law_type,
         law.published_date,
-        law.full_text_raw || ''
+        textContent
       );
 
       const { error: updateErr } = await supabase
